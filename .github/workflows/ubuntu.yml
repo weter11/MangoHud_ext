@@ -12,6 +12,7 @@ jobs:
     steps:
     - name: 'Checkout'
       uses: actions/checkout@v4
+
     - name: 'Install prerequisites'
       run: |
         sudo apt-get update
@@ -30,38 +31,50 @@ jobs:
           libxnvctrl-dev \
           libxkbcommon-dev
         sudo pip3 install 'meson>=0.60'
+
     - name: 'Install clang'
       if:  ${{ (matrix.compiler == 'clang') }}
       run: |
-          sudo apt-get install -y clang
-          echo "CC=clang" >> "$GITHUB_ENV"
-          echo "CXX=clang++" >> "$GITHUB_ENV"
+        sudo apt-get install -y clang
+        echo "CC=clang" >> "$GITHUB_ENV"
+        echo "CXX=clang++" >> "$GITHUB_ENV"
+
     - name: 'Install gcc'
       if:  ${{ (matrix.compiler == 'gcc') }}
       run: |
-          sudo apt-get install -y gcc g++
-          echo "CC=gcc" >> "$GITHUB_ENV"
-          echo "CXX=g++" >> "$GITHUB_ENV"
+        sudo apt-get install -y gcc g++
+        echo "CC=gcc" >> "$GITHUB_ENV"
+        echo "CXX=g++" >> "$GITHUB_ENV"
+
     - name: 'Configure'
-      run: meson setup ./builddir --prefix=/usr
-          -D include_doc=true
-          -D with_xnvctrl=enabled
-          -D with_x11=enabled
-          -D with_wayland=enabled
-          -D with_dbus=enabled
-          -D mangoapp=true
-          -D mangohudctl=true
-          -D tests=enabled
+      run: |
+        meson setup ./builddir --prefix=/usr \
+          -D include_doc=true \
+          -D with_xnvctrl=enabled \
+          -D with_x11=enabled \
+          -D with_wayland=enabled \
+          -D with_dbus=enabled \
+          -D mangoapp=true \
+          -D mangohudctl=true \
+          -D tests=enabled \
           --werror
+
     - name: 'Build'
       run: meson compile -C ./builddir || ninja -C ./builddir
-    - name: 'Install'
-      run: sudo meson install -C ./builddir
-          - name: Upload build artifacts
+
+    - name: 'List build outputs'
+      run: |
+        echo "== Build directory contents =="
+        find builddir -type f | grep -E '\.so$|\.bin$|mangohud|mangoapp' || echo "No binaries found"
+
+    - name: 'Upload build artifacts'
       uses: actions/upload-artifact@v4
       with:
-        name: MangoHud_Build
+        name: MangoHud_Ubuntu_Build
         path: |
-          build/src/*.so
-          build/src/*.dll
-          build/bin/*
+          builddir/src/*.so
+          builddir/bin/*
+          builddir/mangoapp
+          builddir/mangohud
+        if-no-files-found: warn
+/bin/*
