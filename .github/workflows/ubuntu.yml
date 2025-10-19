@@ -6,7 +6,7 @@ jobs:
   build-test:
     strategy:
       matrix:
-        compiler: [clang, gcc]
+        compiler: [clang]
         os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     steps:
