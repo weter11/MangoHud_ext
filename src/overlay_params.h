@@ -463,8 +463,14 @@ struct overlay_params {
 
 const extern char *overlay_param_names[];
 
+struct overlay_config; // forward declaration so compiler knows it exists
+
 void parse_overlay_config(struct overlay_params *params,
-                       const char *env, bool ignore_preset);
+                          const char *env, bool ignore_preset);
+
+#include "imgui.h"
+void load_per_component_fonts(ImGuiIO &io, overlay_config &conf, const std::string &base_path = "");
+
 void presets(int preset, struct overlay_params *params, bool inherit=false);
 bool parse_preset_config(int preset, struct overlay_params *params);
 void add_to_options(struct overlay_params *params, std::string option, std::string value);
