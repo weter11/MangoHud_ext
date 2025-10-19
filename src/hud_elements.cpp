@@ -5,6 +5,7 @@
 #include <cmath>
 #include <map>
 #include "overlay.h"
+#include "style_utils.h"
 #include "overlay_params.h"
 #include "hud_elements.h"
 #include "logging.h"

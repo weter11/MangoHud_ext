@@ -463,3 +463,13 @@ extern bool config_ready;
 std::shared_ptr<overlay_params> get_params();
 
 #endif /* MANGOHUD_OVERLAY_PARAMS_H */
+
+// === Per-component styling additions ===
+    std::string cpu_font_path, gpu_font_path, vram_font_path, ram_font_path;
+    std::string fps_font_path, frametime_font_path, custom_font_path, title_font_path;
+    float cpu_font_size = 0.0f, gpu_font_size = 0.0f, vram_font_size = 0.0f, ram_font_size = 0.0f;
+    float fps_font_size = 0.0f, frametime_font_size = 0.0f, custom_font_size = 0.0f, title_font_size = 0.0f;
+    unsigned cpu_color = 0, gpu_color = 0, vram_color = 0, ram_color = 0;
+    unsigned fps_color = 0, frametime_color = 0, custom_color = 0, title_color = 0;
+    ImFont *cpu_font = nullptr, *gpu_font = nullptr, *vram_font = nullptr, *ram_font = nullptr;
+    ImFont *fps_font = nullptr, *frametime_font = nullptr, *custom_font = nullptr, *title_font = nullptr;

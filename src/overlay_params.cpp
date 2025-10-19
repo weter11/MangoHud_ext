@@ -1450,3 +1450,36 @@ void presets(int preset, struct overlay_params *params, bool inherit) {
 
    }
 }
+
+// === Parse per-component styling ===
+if (strcasecmp(name, "cpu_font_path") == 0) p->cpu_font_path = value;
+else if (strcasecmp(name, "cpu_font_size") == 0) p->cpu_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "cpu_color") == 0) p->cpu_color = parse_color(value);
+
+else if (strcasecmp(name, "gpu_font_path") == 0) p->gpu_font_path = value;
+else if (strcasecmp(name, "gpu_font_size") == 0) p->gpu_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "gpu_color") == 0) p->gpu_color = parse_color(value);
+
+else if (strcasecmp(name, "vram_font_path") == 0) p->vram_font_path = value;
+else if (strcasecmp(name, "vram_font_size") == 0) p->vram_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "vram_color") == 0) p->vram_color = parse_color(value);
+
+else if (strcasecmp(name, "ram_font_path") == 0) p->ram_font_path = value;
+else if (strcasecmp(name, "ram_font_size") == 0) p->ram_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "ram_color") == 0) p->ram_color = parse_color(value);
+
+else if (strcasecmp(name, "fps_font_path") == 0) p->fps_font_path = value;
+else if (strcasecmp(name, "fps_font_size") == 0) p->fps_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "fps_color") == 0) p->fps_color = parse_color(value);
+
+else if (strcasecmp(name, "frametime_font_path") == 0) p->frametime_font_path = value;
+else if (strcasecmp(name, "frametime_font_size") == 0) p->frametime_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "frametime_color") == 0) p->frametime_color = parse_color(value);
+
+else if (strcasecmp(name, "custom_font_path") == 0) p->custom_font_path = value;
+else if (strcasecmp(name, "custom_font_size") == 0) p->custom_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "custom_color") == 0) p->custom_color = parse_color(value);
+
+else if (strcasecmp(name, "title_font_path") == 0) p->title_font_path = value;
+else if (strcasecmp(name, "title_font_size") == 0) p->title_font_size = strtof(value, nullptr);
+else if (strcasecmp(name, "title_color") == 0) p->title_color = parse_color(value);

@@ -118,3 +118,22 @@ void create_fonts(ImFontAtlas* font_atlas, const overlay_params& params, ImFont*
 
    font_atlas->Build();
 }
+
+// === Per-component font loading ===
+#include "overlay_params.h"
+void load_per_component_fonts(ImGuiIO &io, overlay_params* p)
+{
+    if (!p) return;
+    auto load_font = [&](const std::string &path, float size) -> ImFont* {
+        if (path.empty()) return nullptr;
+        return io.Fonts->AddFontFromFileTTF(path.c_str(), size > 0 ? size : p->font_size);
+    };
+    p->cpu_font = load_font(p->cpu_font_path, p->cpu_font_size);
+    p->gpu_font = load_font(p->gpu_font_path, p->gpu_font_size);
+    p->vram_font = load_font(p->vram_font_path, p->vram_font_size);
+    p->ram_font = load_font(p->ram_font_path, p->ram_font_size);
+    p->fps_font = load_font(p->fps_font_path, p->fps_font_size);
+    p->frametime_font = load_font(p->frametime_font_path, p->frametime_font_size);
+    p->custom_font = load_font(p->custom_font_path, p->custom_font_size);
+    p->title_font = load_font(p->title_font_path, p->title_font_size);
+}
