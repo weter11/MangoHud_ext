@@ -57,3 +57,11 @@ jobs:
       run: meson compile -C ./builddir || ninja -C ./builddir
     - name: 'Install'
       run: sudo meson install -C ./builddir
+          - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: MangoHud_Build
+        path: |
+          build/src/*.so
+          build/src/*.dll
+          build/bin/*
