@@ -13,38 +13,6 @@
 #include "overlay_params.h"
 #include "shell.h"
 #include "gpu.h"
-#include "overlay_params.h"
-#include "shell.h"
-#include "gpu.h"
-#include <optional>
-
-// Font properties for a component
-struct FontProperties {
-    std::string font_file;      // Custom font file path
-    float font_size;            // Custom font size (0 = use default)
-    ImVec4 color;               // Custom color
-    bool has_custom_font;       // Has custom font file
-    bool has_custom_size;       // Has custom size
-    bool has_custom_color;      // Has custom color
-
-    FontProperties()
-        : font_size(0.0f)
-        , color(1.0f, 1.0f, 1.0f, 1.0f)
-        , has_custom_font(false)
-        , has_custom_size(false)
-        , has_custom_color(false)
-    {}
-};
-
-// Helper for rendering text with custom font properties
-struct FontScope {
-    FontScope(const FontProperties& props, const overlay_params* params);
-    ~FontScope();
-    ImVec4 get_color() const { return current_color; }
-private:
-    ImVec4 current_color;
-    bool pushed_font;
-};
 
 struct Function {
     std::function<void()> run;  // Using std::function instead of a raw function pointer for more flexibility
@@ -151,7 +119,6 @@ class HudElements{
         static void _display_session();
         static void fex_stats();
         static void ftrace();
-        static void title();
 
         void convert_colors(const struct overlay_params& params);
         void convert_colors(bool do_conv, const struct overlay_params& params);
@@ -181,21 +148,8 @@ class HudElements{
                 fps_value_med,
                 fps_value_high,
                 text_outline,
-                network,
-                cpu_label,
-                gpu_label,
-                vram_label,
-                ram_label,
-                wine_label,
-                engine_label,
-                time_label,
-                fps_label,
-                resolution_label,
-                custom_text_label,
-                title_label;
+                network;
         } colors {};
-
-        std::map<std::string, FontProperties> component_fonts;
 
         void TextColored(ImVec4 col, const char *fmt, ...);
 

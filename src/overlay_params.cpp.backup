@@ -593,49 +593,6 @@ parse_ftrace(const char *str) {
 #define parse_network(s) parse_str_tokenize(s)
 #define parse_gpu_text(s) parse_str_tokenize(s)
 
-// Font size parsers
-#define parse_cpu_label_font_size(s) parse_float(s)
-#define parse_gpu_label_font_size(s) parse_float(s)
-#define parse_vram_label_font_size(s) parse_float(s)
-#define parse_ram_label_font_size(s) parse_float(s)
-#define parse_wine_label_font_size(s) parse_float(s)
-#define parse_engine_label_font_size(s) parse_float(s)
-#define parse_time_label_font_size(s) parse_float(s)
-#define parse_fps_label_font_size(s) parse_float(s)
-#define parse_resolution_label_font_size(s) parse_float(s)
-#define parse_custom_text_font_size(s) parse_float(s)
-
-// Color parsers
-#define parse_cpu_label_color(s) parse_color(s)
-#define parse_gpu_label_color(s) parse_color(s)
-#define parse_vram_label_color(s) parse_color(s)
-#define parse_ram_label_color(s) parse_color(s)
-#define parse_wine_label_color(s) parse_color(s)
-#define parse_engine_label_color(s) parse_color(s)
-#define parse_time_label_color(s) parse_color(s)
-#define parse_fps_label_color(s) parse_color(s)
-#define parse_resolution_label_color(s) parse_color(s)
-#define parse_custom_text_color(s) parse_color(s)
-
-// Title parsers
-#define parse_title_text(s) parse_str(s)
-#define parse_title_font_size(s) parse_float(s)
-#define parse_title_color(s) parse_color(s)
-#define parse_title_position(s) parse_str(s)
-
-// CPU core filtering
-#define parse_cpu_cores(s) parse_str(s)
-#define parse_core_p_font_size(s) parse_float(s)
-#define parse_core_p_color(s) parse_color(s)
-#define parse_core_e_font_size(s) parse_float(s)
-#define parse_core_e_color(s) parse_color(s)
-
-// Custom label text
-#define parse_cpu_label_text(s) parse_str(s)
-#define parse_gpu_label_text(s) parse_str(s)
-#define parse_vram_label_text(s) parse_str(s)
-#define parse_ram_label_text(s) parse_str(s)
-
 static bool
 parse_help(const char *str)
 {
@@ -921,49 +878,6 @@ static void set_param_defaults(struct overlay_params *params){
    params->table_columns = 3;
    params->text_outline_color = 0x000000;
    params->text_outline_thickness = 1.5;
-
-   // Component font sizes default to 0 (use default font_size)
-   params->cpu_label_font_size = 0;
-   params->gpu_label_font_size = 0;
-   params->vram_label_font_size = 0;
-   params->ram_label_font_size = 0;
-   params->wine_label_font_size = 0;
-   params->engine_label_font_size = 0;
-   params->time_label_font_size = 0;
-   params->fps_label_font_size = 0;
-   params->resolution_label_font_size = 0;
-   params->custom_text_font_size = 0;
-
-   // Component colors default to their base colors
-   params->cpu_label_color = params->cpu_color;
-   params->gpu_label_color = params->gpu_color;
-   params->vram_label_color = params->vram_color;
-   params->ram_label_color = params->ram_color;
-   params->wine_label_color = params->wine_color;
-   params->engine_label_color = params->engine_color;
-   params->time_label_color = params->text_color;
-   params->fps_label_color = params->engine_color;
-   params->resolution_label_color = params->engine_color;
-   params->custom_text_color = params->text_color;
-
-   // Title defaults
-   params->title_text = "";
-   params->title_font_size = 0;
-   params->title_color = params->text_color;
-   params->title_position = "";
-
-   // CPU core filtering defaults
-   params->cpu_cores = "";
-   params->core_p_font_size = 0;
-   params->core_p_color = params->cpu_color;
-   params->core_e_font_size = 0;
-   params->core_e_color = params->cpu_color;
-
-   // Custom label text defaults
-   params->cpu_label_text = "";
-   params->gpu_label_text = "";
-   params->vram_label_text = "";
-   params->ram_label_text = "";
 }
 
 static std::string verify_pci_dev(std::string pci_dev) {
@@ -1085,7 +999,7 @@ parse_overlay_config(struct overlay_params *params,
       params->font_scale_media_player = 0.55f;
 
    // Convert from 0xRRGGBB to ImGui's format
-   std::array<unsigned *, 39> colors = {
+   std::array<unsigned *, 24> colors = {
       &params->cpu_color,
       &params->gpu_color,
       &params->vram_color,
@@ -1110,19 +1024,6 @@ parse_overlay_config(struct overlay_params *params,
       &params->fps_color[2],
       &params->text_outline_color,
       &params->network_color,
-      &params->cpu_label_color,
-      &params->gpu_label_color,
-      &params->vram_label_color,
-      &params->ram_label_color,
-      &params->wine_label_color,
-      &params->engine_label_color,
-      &params->time_label_color,
-      &params->fps_label_color,
-      &params->resolution_label_color,
-      &params->custom_text_color,
-      &params->title_color,
-      &params->core_p_color,
-      &params->core_e_color,
    };
 
    for (auto color : colors){
@@ -1159,15 +1060,7 @@ parse_overlay_config(struct overlay_params *params,
                                  params->font_file_text,
                                  params->font_glyph_ranges,
                                  params->font_scale,
-                                 params->font_size_secondary,
-                                 params->cpu_label_font_size,
-                                 params->gpu_label_font_size,
-                                 params->vram_label_font_size,
-                                 params->ram_label_font_size,
-                                 params->title_font_size,
-                                 params->custom_text_font_size,
-                                 params->core_p_font_size,
-                                 params->core_e_font_size
+                                 params->font_size_secondary
                                 );
 
    // check if user specified an env for fps limiter instead
@@ -1269,12 +1162,6 @@ parse_overlay_config(struct overlay_params *params,
    auto snapshot = std::make_shared<overlay_params>(*params);
    std::atomic_store_explicit(&g_params, std::move(snapshot), std::memory_order_release);
    HUDElements.params = get_params();
-
-   // Apply CPU core filter if specified
-   if (!params->cpu_cores.empty()) {
-      cpuStats.SetCoreFilter(params->cpu_cores);
-      SPDLOG_DEBUG("CPU core filter set: {}", params->cpu_cores);
-   }
 
    if (!gpus)
       gpus = std::make_unique<GPUS>();

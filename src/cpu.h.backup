@@ -50,30 +50,6 @@ typedef struct CPUData_ {
    std::string label = "unknown";
 } CPUData;
 
-// Represents a group of cores (for combining)
-struct CoreGroup {
-   std::vector<int> core_ids;
-   float combined_load;
-   int combined_freq;
-   std::string display_name;
-   bool is_performance_core;
-};
-
-// Core filter specification
-struct CoreFilter {
-   enum FilterType {
-      SHOW_ALL,
-      SHOW_RANGE,
-      SHOW_COMBINED
-   };
-
-   FilterType type;
-   std::vector<int> individual_cores;
-   std::vector<CoreGroup> core_groups;
-
-   CoreFilter() : type(SHOW_ALL) {}
-};
-
 enum {
    CPU_POWER_K10TEMP,
    CPU_POWER_ZENPOWER,
@@ -214,10 +190,6 @@ public:
       return m_cpuData;
    }
    const CPUData& GetCPUDataTotal() const {
-   }
-
-   void SetCoreFilter(const std::string& filter_spec);
-   std::vector<CoreGroup> GetFilteredCores();
       return m_cpuDataTotal;
    }
 private:
@@ -230,7 +202,6 @@ private:
    bool m_inited = false;
    FILE *m_cpuTempFile = nullptr;
    std::unique_ptr<CPUPowerData> m_cpuPowerData;
-   CoreFilter m_coreFilter;
 
    const std::map<std::string, std::string> intel_cores = {
       {"P", "/sys/devices/cpu_core/cpus"},

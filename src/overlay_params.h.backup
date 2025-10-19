@@ -217,40 +217,7 @@ struct Tracepoint;
    OVERLAY_PARAM_CUSTOM(network)                     \
    OVERLAY_PARAM_CUSTOM(gpu_list)                    \
    OVERLAY_PARAM_CUSTOM(fex_stats)                   \
-   OVERLAY_PARAM_CUSTOM(cpu_label_font_size)         \
-   OVERLAY_PARAM_CUSTOM(gpu_label_font_size)         \
-   OVERLAY_PARAM_CUSTOM(vram_label_font_size)        \
-   OVERLAY_PARAM_CUSTOM(ram_label_font_size)         \
-   OVERLAY_PARAM_CUSTOM(wine_label_font_size)        \
-   OVERLAY_PARAM_CUSTOM(engine_label_font_size)      \
-   OVERLAY_PARAM_CUSTOM(time_label_font_size)        \
-   OVERLAY_PARAM_CUSTOM(fps_label_font_size)         \
-   OVERLAY_PARAM_CUSTOM(resolution_label_font_size)  \
-   OVERLAY_PARAM_CUSTOM(custom_text_font_size)       \
-   OVERLAY_PARAM_CUSTOM(cpu_label_color)             \
-   OVERLAY_PARAM_CUSTOM(gpu_label_color)             \
-   OVERLAY_PARAM_CUSTOM(vram_label_color)            \
-   OVERLAY_PARAM_CUSTOM(ram_label_color)             \
-   OVERLAY_PARAM_CUSTOM(wine_label_color)            \
-   OVERLAY_PARAM_CUSTOM(engine_label_color)          \
-   OVERLAY_PARAM_CUSTOM(time_label_color)            \
-   OVERLAY_PARAM_CUSTOM(fps_label_color)             \
-   OVERLAY_PARAM_CUSTOM(resolution_label_color)      \
-   OVERLAY_PARAM_CUSTOM(custom_text_color)           \
-   OVERLAY_PARAM_CUSTOM(title_text)                  \
-   OVERLAY_PARAM_CUSTOM(title_font_size)             \
-   OVERLAY_PARAM_CUSTOM(title_color)                 \
-   OVERLAY_PARAM_CUSTOM(title_position)              \
-   OVERLAY_PARAM_CUSTOM(cpu_cores)                   \
-   OVERLAY_PARAM_CUSTOM(core_p_font_size)            \
-   OVERLAY_PARAM_CUSTOM(core_p_color)                \
-   OVERLAY_PARAM_CUSTOM(core_e_font_size)            \
-   OVERLAY_PARAM_CUSTOM(core_e_color)                \
-   OVERLAY_PARAM_CUSTOM(cpu_label_text)              \
-   OVERLAY_PARAM_CUSTOM(gpu_label_text)              \
-   OVERLAY_PARAM_CUSTOM(vram_label_text)             \
-   OVERLAY_PARAM_CUSTOM(ram_label_text)              \
-
+   OVERLAY_PARAM_CUSTOM(ftrace)                      \
 
 enum overlay_param_position {
    LAYER_POSITION_TOP_LEFT,
@@ -390,35 +357,6 @@ struct overlay_params {
    std::vector<std::string> network;
    std::vector<unsigned> gpu_list;
    int transfer_function;
-
-   // Per-component font sizes (0 = use default)
-   float cpu_label_font_size, gpu_label_font_size, vram_label_font_size;
-   float ram_label_font_size, wine_label_font_size, engine_label_font_size;
-   float time_label_font_size, fps_label_font_size, resolution_label_font_size;
-   float custom_text_font_size;
-
-   // Per-component colors
-   unsigned cpu_label_color, gpu_label_color, vram_label_color;
-   unsigned ram_label_color, wine_label_color, engine_label_color;
-   unsigned time_label_color, fps_label_color, resolution_label_color;
-   unsigned custom_text_color;
-
-   // Title element
-   std::string title_text;
-   float title_font_size;
-   unsigned title_color;
-   std::string title_position;
-
-   // CPU core filtering and styling
-   std::string cpu_cores;
-   float core_p_font_size, core_e_font_size;
-   unsigned core_p_color, core_e_color;
-
-   // Custom label text (preserves case as user types)
-   std::string cpu_label_text;
-   std::string gpu_label_text;
-   std::string vram_label_text;
-   std::string ram_label_text;
 
    struct fex_stats_options {
       bool enabled {false};
