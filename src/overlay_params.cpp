@@ -21,6 +21,7 @@
 #include <functional>
 #include <spdlog/spdlog.h>
 
+#include "cpu.h"
 #include "overlay_params.h"
 #include "overlay.h"
 #include "config.h"
@@ -41,6 +42,8 @@
 #include "app/mangoapp.h"
 #include "fps_metrics.h"
 #include "version.h"
+
+
 
 std::unique_ptr<fpsMetrics> fpsmetrics;
 std::mutex config_mtx;
