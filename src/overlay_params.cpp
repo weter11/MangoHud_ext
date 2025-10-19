@@ -1449,6 +1449,56 @@ void presets(int preset, struct overlay_params *params, bool inherit) {
          break;
 
    }
+   #include <cstdio>
+#include <string>
+#include <sys/stat.h>
+#include "overlay_params.h"
+#include "imgui.h"
+
+static bool file_exists(const std::string &path)
+{
+    struct stat buffer;
+    return (stat(path.c_str(), &buffer) == 0);
+}
+
+void load_per_component_fonts(ImGuiIO &io, overlay_config &conf, const std::string &base_path)
+{
+    auto &params = *conf.params;
+
+    // Small helper for cleaner code
+    auto load_font = [&](const std::string &font_path, float size) -> ImFont* {
+        if (font_path.empty())
+            return nullptr;
+
+        std::string full_path = base_path + "/" + font_path;
+        if (!file_exists(full_path)) {
+            fprintf(stderr, "[MangoHud] Font file not found: %s\n", full_path.c_str());
+            return nullptr;
+        }
+
+        ImFont* font = io.Fonts->AddFontFromFileTTF(full_path.c_str(), size);
+        if (!font)
+            fprintf(stderr, "[MangoHud] Failed to load font: %s\n", full_path.c_str());
+        return font;
+    };
+
+    float base_size = params.font_size > 0 ? params.font_size : 16.0f;
+
+    // Load all component-specific fonts from overlay_config
+    params.cpu_font        = load_font(conf.cpu_font_path, base_size);
+    params.gpu_font        = load_font(conf.gpu_font_path, base_size);
+    params.vram_font       = load_font(conf.vram_font_path, base_size);
+    params.ram_font        = load_font(conf.ram_font_path, base_size);
+    params.fps_font        = load_font(conf.fps_font_path, base_size);
+    params.frametime_font  = load_font(conf.frametime_font_path, base_size);
+    params.title_font      = load_font(conf.title_font_path, base_size);
+    params.custom_font     = load_font(conf.custom_font_path, base_size);
+
+    io.Fonts->Build();
+
+    fprintf(stderr, "[MangoHud] Per-component fonts loaded (base size %.1f)\n", base_size);
+}
+
 }
 
 // === Parse per-component styling ===
