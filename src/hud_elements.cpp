@@ -540,7 +540,7 @@ void HudElements::gpu_stats(){
             }
             if (!HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_horizontal])
                 ImGui::TableNextRow();
-            i++;
+      
         }
     }
 }
