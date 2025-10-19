@@ -658,31 +658,34 @@ void HudElements::core_load(){
             ImguiNextColumnFirstItem();
         }
         char hash[40];
-        snprintf(hash, sizeof(hash), "##%s", overlay_param_names[OVERLAY_PARAM_ENABLED_core_bars]);
-        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-        float width, height = 0;
-        if (HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_horizontal]){
-            width = 150;
-            height = HUDElements.params->font_size;
-        } else {
-            width = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x);
-            height = 50;
-        }
+snprintf(hash, sizeof(hash), "##%s", overlay_param_names[OVERLAY_PARAM_ENABLED_core_bars]);
+ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+float width, height = 0;
 
-        if (ImGui::BeginChild("core_bars_window", ImVec2(width, height))) {
-            ImGui::PlotHistogram(hash, get_core_load_stat, &cpuStats,
-                                        auto core_groups = cpuStats.GetFilteredCores();
+if (HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_horizontal]) {
+    width = 150;
+    height = HUDElements.params->font_size;
+} else {
+    width = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x);
+    height = 50;
+}
 
-        for (const auto& group : core_groups)
-        {
-            ImguiNextColumnFirstItem();
+if (ImGui::BeginChild("core_bars_window", ImVec2(width, height))) {
+    ImGui::PlotHistogram(hash, get_core_load_stat, &cpuStats);
 
-            std::string component_name = group.is_performance_core ? "core_p" : "core_e";
-            FontScope font_scope(get_component_font(component_name), HUDElements.params.get());
+    auto core_groups = cpuStats.GetFilteredCores();
 
-            const char* cpu_label = HUDElements.params->cpu_label_text.empty()
-                ? "CPU"
-                : HUDElements.params->cpu_label_text.c_str();
+    for (const auto& group : core_groups)
+    {
+        ImguiNextColumnFirstItem();
+
+        std::string component_name = group.is_performance_core ? "core_p" : "core_e";
+        FontScope font_scope(get_component_font(component_name), HUDElements.params.get());
+
+        const char* cpu_label = HUDElements.params->cpu_label_text.empty()
+            ? "CPU"
+            : HUDElements.params->cpu_label_text.c_str();
+
 
             HUDElements.TextColored(font_scope.get_color(), "%s", cpu_label);
             ImGui::SameLine(0, 1.0f);
