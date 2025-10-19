@@ -466,6 +466,7 @@ parse_fex_stats(const char *str) {
    return options;
 }
 
+[[maybe_unused]]
 static overlay_params::ftrace_options
 parse_ftrace(const char *str) {
    overlay_params::ftrace_options options;
