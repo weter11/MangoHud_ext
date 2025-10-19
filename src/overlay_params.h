@@ -373,6 +373,20 @@ struct overlay_params {
    uint32_t font_glyph_ranges;
    std::string custom_text_center;
    std::string custom_text;
+
+    // ────────────────────────────────────────────────
+    // Per-component font configuration (new)
+    // These pointers are set by load_per_component_fonts()
+    // and used in style_utils.h for dynamic ImGui font selection.
+    ImFont* cpu_font = nullptr;
+    ImFont* gpu_font = nullptr;
+    ImFont* vram_font = nullptr;
+    ImFont* ram_font = nullptr;
+    ImFont* fps_font = nullptr;
+    ImFont* frametime_font = nullptr;
+    ImFont* title_font = nullptr;
+    ImFont* custom_font = nullptr;
+
    std::string config_file_path;
    std::unordered_map<std::string,std::string> options;
    int permit_upload;
