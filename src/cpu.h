@@ -214,12 +214,12 @@ public:
       return m_cpuData;
    }
    const CPUData& GetCPUDataTotal() const {
-   }
+   return m_cpuDataTotal;
+}
 
-   void SetCoreFilter(const std::string& filter_spec);
-   std::vector<CoreGroup> GetFilteredCores();
-      return m_cpuDataTotal;
-   }
+void SetCoreFilter(const std::string& filter_spec);
+std::vector<CoreGroup> GetFilteredCores();
+   
 private:
    unsigned long long int m_boottime = 0;
    std::vector<CPUData> m_cpuData;
