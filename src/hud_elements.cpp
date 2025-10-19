@@ -770,6 +770,7 @@ void HudElements::core_load(){
         }
     }
 }
+}
 
 void HudElements::io_stats(){
 #ifndef _WIN32
