@@ -77,4 +77,3 @@ jobs:
           builddir/mangoapp
           builddir/mangohud
         if-no-files-found: warn
-/bin/*
