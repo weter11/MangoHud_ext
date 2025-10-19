@@ -671,7 +671,10 @@ if (HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_horizontal]) {
 }
 
 if (ImGui::BeginChild("core_bars_window", ImVec2(width, height))) {
-    ImGui::PlotHistogram(hash, get_core_load_stat, &cpuStats);
+    ImGui::PlotHistogram(hash, get_core_load_stat, &cpuStats,
+                     cpuStats.GetCPUData().size(), 0, NULL,
+                     0.0f, 100.0f, ImVec2(width, height));
+
 
     auto core_groups = cpuStats.GetFilteredCores();
 
