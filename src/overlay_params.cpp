@@ -1499,6 +1499,15 @@ void load_per_component_fonts(ImGuiIO &io, overlay_config &conf, const std::stri
     fprintf(stderr, "[MangoHud] Per-component fonts loaded (base size %.1f)\n", base_size);
 }
 
+void load_per_component_fonts(ImGuiIO &io, overlay_config &conf, const std::string &base_path)
+{
+    // Example stub implementation — safe placeholder
+    // You’ll expand it later to actually load per-component fonts
+    (void)io;
+    (void)conf;
+    (void)base_path;
+}
+   
 }
 
 // === Parse per-component styling ===
